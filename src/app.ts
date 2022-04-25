@@ -3,8 +3,6 @@ import { KoaServer } from "./server";
 import { logger } from "./services/logger"
 
 AppDataSource.initialize().then(async () => {
-
-    const app = new KoaServer()
-    app.start()
-
+    const server = new KoaServer()
+    server.start()
 }).catch(error => logger.error(error))
