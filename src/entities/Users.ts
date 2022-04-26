@@ -17,13 +17,13 @@ export class Users {
   @Column({ default: true })
   isActive: boolean
 
-  @Column({ nullable: true, type: "datetime" })
+  @Column({ nullable: true, type: "timestamptz" })
   lastLogin: Date;
 
-  @CreateDateColumn({ type: "datetime" })
+  @CreateDateColumn({ type: "timestamptz" })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "datetime" })
+  @UpdateDateColumn({ type: "timestamptz" })
   updatedAt: Date;
 
   hashPassword () {
