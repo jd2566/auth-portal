@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+
+  testing-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${TESTING_USERNAME}
+      POSTGRES_PASSWORD: ${TESTING_PASSWORD}
+      POSTGRES_DB: ${TESTING_DATABASE}
+    ports:
+      - ${TESTING_PORT}:5432
