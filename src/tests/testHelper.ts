@@ -21,6 +21,7 @@ export class TestHelper {
   }
 
   async teardownTestDB () {
+    await this.datasource.dropDatabase()
     await this.datasource.destroy()
   }
 

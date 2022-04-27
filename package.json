@@ -73,7 +73,7 @@
    "nodemonConfig": {
       "ts": "ts-node",
       "ignore": [
-         "tests/*"
+         "src/tests/**/*"
       ]
    },
    "jest": {
