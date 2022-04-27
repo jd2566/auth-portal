@@ -1,6 +1,5 @@
-import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
-import { DataBaseSource } from '../data-source'
+import { Env, getDataSource } from '../data-source'
 
 export class TestHelper {
 
@@ -17,15 +16,7 @@ export class TestHelper {
   private datasource!: DataSource;
 
   async setupTestDB () {
-    config()
-    const TestDataSource: DataBaseSource = new DataBaseSource({
-      host: process.env.TESTING_HOST,
-      port: Number(process.env.TESTING_PORT),
-      username: process.env.TESTING_USERNAME,
-      password: process.env.TESTING_PASSWORD,
-      database: process.env.TESTING_DATABASE,
-    })
-    this.datasource = TestDataSource.instance
+    this.datasource = getDataSource(Env.Test)
     await this.datasource.initialize()
   }
 

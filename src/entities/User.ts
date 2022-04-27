@@ -1,14 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm"
 import { Length } from "class-validator";
 import * as bcrypt from "bcryptjs";
 
 @Entity()
-export class Users {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
-  @Length(4, 20)
+  @Length(6, 20)
   username: string;
 
   @Column()

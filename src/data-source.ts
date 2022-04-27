@@ -1,41 +1,39 @@
 import "reflect-metadata"
-import { DataSource } from "typeorm"
-import { Users } from "./entities/Users"
-import { config } from 'dotenv';
+import { DataSource, DataSourceOptions } from "typeorm"
+import { User } from "./entities/User"
+import config from "./config/env";
 
-interface SourceOptions {
-    host: string;
-    port: number;
-    username: string;
-    password: string;
-    database: string;
+export enum Env {
+    Test = 0,
+    Prod = 1
 }
-export class DataBaseSource {
-    public instance: DataSource;
 
-    constructor(options: SourceOptions) {
-        this.instance = new DataSource({
-            type: "postgres",
-            host: options.host,
-            port: options.port,
-            username: options.username,
-            password: options.password,
-            database: options.database,
-            synchronize: true,
-            logging: false,
-            entities: [Users],
-            migrations: [],
-            subscribers: []
-        })
+export function getDataSource (targetEnv: Env): DataSource {
+    const commonOptions: DataSourceOptions = {
+        type: "postgres",
+        synchronize: true,
+        logging: false,
+        entities: [User],
+        migrations: [],
+        subscribers: [],
     }
+    let envOptions = {
+        host: config.TYPEORM_HOST,
+        port: config.TYPEORM_PORT,
+        username: config.TYPEORM_USERNAME,
+        password: config.TYPEORM_PASSWORD,
+        database: config.TYPEORM_DATABASE
+    }
+
+    if (targetEnv === Env.Test) {
+        envOptions = {
+            host: config.TESTING_HOST,
+            port: config.TESTING_PORT,
+            username: config.TESTING_USERNAME,
+            password: config.TESTING_PASSWORD,
+            database: config.TESTING_DATABASE
+        }
+    }
+
+    return new DataSource({ ...commonOptions, ...envOptions })
 }
-
-config()
-
-export const AppDataSource = new DataBaseSource({
-    host: process.env.TYPEORM_HOST,
-    port: Number(process.env.TYPEORM_PORT),
-    username: process.env.TYPEORM_USERNAME,
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE,
-})
