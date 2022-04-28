@@ -21,6 +21,7 @@ describe('User Controller Tests', () => {
         .send({ username: 'testuser', password: '123456' })
         .set('Accept', 'application/json')
     expect(response.status).toBe(200);
+    expect(response.header)
     expect(response.body).toStrictEqual({
       username: 'testuser',
       isActive: true

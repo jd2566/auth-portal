@@ -1,8 +1,4 @@
-import path from "path";
-import dotenv from "dotenv";
-
-// Parsing the env file.
-dotenv.config();
+import 'dotenv/config'
 
 // Interface to load env variables
 // Note these variables can possibly be undefined

@@ -1,8 +1,18 @@
 import Router from "koa-router";
 import * as controller from "../../controllers";
+import validator, { Joi } from 'koa-context-validator';
 
-const controllerRouter = new Router();
+const usersRouter = new Router();
 
-controllerRouter.get("/", controller.users.index);
+usersRouter.post(
+  '/users',
+  validator({
+    params: Joi.object().keys({
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    }),
+  }),
+  controller.users.create
+);
 
-export { controllerRouter };
+export { usersRouter };
