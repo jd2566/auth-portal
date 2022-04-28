@@ -3,7 +3,7 @@ import { UserGateway } from "../gateways/UserGateway";
 
 export default class UsersController {
   public static async create (ctx: Context) {
-    const { username } = ctx.request.body
+    const { username, password } = ctx.request.body
     const user =
       await UserGateway.instance
         .createUser('testuser', 'testpassword')

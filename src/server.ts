@@ -11,8 +11,21 @@ export class KoaServer {
 
   constructor() {
     this.app = new Koa()
-    this.app.use(helmet())
-      .use(bodyParser())
+    // Error handling
+    this.app.use(async (ctx, next) => {
+      try {
+        await next();
+      } catch (err) {
+        ctx.status = err.statusCode || err.status || 500;
+        ctx.body = {
+          message: err.message,
+        };
+      }
+    })
+
+    this.app
+      .use(helmet())
+      .use(bodyParser({ multipart: true }))
       .use(usersRouter.middleware())
 
     this.server = http.createServer(this.app.callback())
