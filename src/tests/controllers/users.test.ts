@@ -19,9 +19,9 @@ describe('User Controller Tests', () => {
       await request(app.callback())
         .post('/users')
         .send({ username: 'testuser', password: '123456' })
-        .set('Accept', 'application/json')
+        .set('Accept', 'multipart/form-data')
+
     expect(response.status).toBe(200);
-    expect(response.header)
     expect(response.body).toStrictEqual({
       username: 'testuser',
       isActive: true

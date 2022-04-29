@@ -16,15 +16,18 @@ export class UserGateway {
     const user = new User();
     user.username = username
     user.password = password
+    user.hashPassword();
+    try {
+      return await user.save();
+    } catch (error) {
 
-    return await user.save();
+    }
   }
 
-  async findUser (username: string, password: string): Promise<User> {
-    const user = await User.findOneOrFail({
+  async findUser (username: string): Promise<User> {
+    const user = await User.findOne({
       where: {
-        username,
-        password
+        username
       }
     });
 
