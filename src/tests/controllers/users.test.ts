@@ -5,16 +5,8 @@ import request from 'supertest';
 const server = new KoaServer()
 const app = server.app
 
-//beforeAll(async () => {
-//  await TestHelper.instance.setupTestDB();
-//});
-
-//afterAll(async () => {
-//  await TestHelper.instance.teardownTestDB();
-//});
-
 describe('User Controller Tests', () => {
-  test('should create a user', async () => {
+  test('should create a user and return 200', async () => {
     const response =
       await request(app.callback())
         .post('/users')
@@ -26,6 +18,16 @@ describe('User Controller Tests', () => {
       username: 'testuser',
       isActive: true
     });
+  });
+
+  test('should throw 400 if request missing password data', async () => {
+    const response =
+      await request(app.callback())
+        .post('/users')
+        .send({ username: 'testuser' })
+        .set('Accept', 'multipart/form-data')
+
+    expect(response.status).toBe(400);
   });
 
 });

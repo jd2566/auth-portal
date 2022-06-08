@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm"
-import { Length } from "class-validator";
+import { Length, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
 
 @Entity()
@@ -9,9 +9,12 @@ export class User extends BaseEntity {
 
   @Column({ unique: true })
   @Length(6, 20)
+  @IsNotEmpty()
   username: string;
 
-  @Column()
+  @Column({ nullable: false })
+  @Length(6, 20)
+  @IsNotEmpty()
   password: string
 
   @Column({ default: true })

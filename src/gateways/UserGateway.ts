@@ -1,4 +1,5 @@
 import { User } from "../entities/User";
+import { validateEntity } from "../config/validation";
 
 export class UserGateway {
 
@@ -16,11 +17,12 @@ export class UserGateway {
     const user = new User();
     user.username = username
     user.password = password
-    user.hashPassword();
-    try {
-      return await user.save();
-    } catch (error) {
 
+    const validateResult = await validateEntity(user)
+
+    if (validateResult) {
+      user.hashPassword();
+      return await user.save();
     }
   }
 

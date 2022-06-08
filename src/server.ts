@@ -16,7 +16,13 @@ export class KoaServer {
       try {
         await next();
       } catch (err) {
-        ctx.status = err.statusCode || err.status || 500;
+
+        if (err.isJoi) {
+          ctx.status = 400
+        } else {
+          ctx.status = err.statusCode || err.status || 500;
+        }
+
         ctx.body = {
           message: err.message,
         };
