@@ -15,10 +15,10 @@ interface ENV {
   TESTING_USERNAME: string | undefined;
   TESTING_PASSWORD: string | undefined;
   TESTING_DATABASE: string | undefined;
+  JWT_SECRET: string | undefined;
 }
 
 interface Config {
-
   TYPEORM_HOST: string;
   TYPEORM_PORT: number;
   TYPEORM_USERNAME: string;
@@ -29,6 +29,7 @@ interface Config {
   TESTING_USERNAME: string;
   TESTING_PASSWORD: string;
   TESTING_DATABASE: string;
+  JWT_SECRET: string;
 }
 
 // Loading process.env as ENV interface
@@ -44,7 +45,8 @@ const getConfig = (): ENV => {
     TESTING_PORT: process.env.TESTING_PORT ? Number(process.env.TESTING_PORT) : undefined,
     TESTING_USERNAME: process.env.TESTING_USERNAME,
     TESTING_PASSWORD: process.env.TESTING_PASSWORD,
-    TESTING_DATABASE: process.env.TESTING_DATABASE
+    TESTING_DATABASE: process.env.TESTING_DATABASE,
+    JWT_SECRET: process.env.JWT_SECRET
   };
 };
 
